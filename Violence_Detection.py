@@ -1,17 +1,14 @@
-
-
-# Primero instalar openCV package para importar cv2
-
 import cv2
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-
+import pickle
 
 # Para descargar los datasets
 import download
 
 from random import shuffle
+from multiprocessing import Queue
 
 from keras.applications import VGG16
 
@@ -21,34 +18,9 @@ from keras.layers import Input
 from keras.layers import LSTM
 from keras.layers import Dense, Activation
 import sys
-import h5py
 
-in_dir_prueba = 'data'
-# Directorio donde vamos a poner todos los videos
-in_dir = "data"
-# Tamanyo de cada imagen    
-img_size = 224
-img_size_touple = (img_size, img_size)
-# Donde se van a almacenar todas las imagene
-#images = []
-# Numero de canales
-num_channels = 3
-# Tamanyo imagen cuando se aplana en vector 1 dimension
-img_size_flat = img_size * img_size * num_channels
-# Numero de clases
-num_classes = 2
-# Numero de videos para entreno
-_num_files_train = 1
-# Numero de frames por video
-_images_per_file = 20
-# Numero de imagenes total en el training-set
-_num_images_train = _num_files_train * _images_per_file
-# Extension de video
-video_exts = ".avi"
-# Url de descarga directa
-url_hockey = "http://visilab.etsii.uclm.es/personas/oscar/FightDetection/HockeyFights.zip"
-url_movies = "http://visilab.etsii.uclm.es/personas/oscar/FightDetection/Peliculas.rar"
-download_data(in_dir,url_hockey)
+
+import h5py
 
 
 def print_progress(count, max_count):
@@ -63,6 +35,50 @@ def print_progress(count, max_count):
     sys.stdout.write(msg)
     sys.stdout.flush()
     
+
+
+
+# Directorio donde vamos a poner todos los videos
+in_dir = "data"
+
+# Tamanyo de cada imagen    
+img_size = 224
+
+img_size_touple = (img_size, img_size)
+
+
+# Donde se van a almacenar todas las imagene
+#images = []
+
+# Numero de canales
+num_channels = 3
+
+# Tamanyo imagen cuando se aplana en vector 1 dimension
+img_size_flat = img_size * img_size * num_channels
+
+# Numero de clases
+num_classes = 2
+
+# Numero de videos para entreno
+_num_files_train = 1
+
+# Numero de frames por video
+_images_per_file = 20
+
+# Numero de imagenes total en el training-set
+_num_images_train = _num_files_train * _images_per_file
+
+# Extension de video
+video_exts = ".avi"
+
+# Url de descarga directa
+url_hockey = "http://visilab.etsii.uclm.es/personas/oscar/FightDetection/HockeyFights.zip"
+
+url_movies = "http://visilab.etsii.uclm.es/personas/oscar/FightDetection/Peliculas.rar"
+
+in_dir = "data"
+
+
 # Funcion para descargar los datos
 def download_data(in_dir, url):
     
@@ -72,7 +88,16 @@ def download_data(in_dir, url):
     
     # Para descargar del link directo y extraer los archivos
     download.maybe_download_and_extract(url,in_dir)
-       
+    
+    
+#def label_vid(vid_name):
+#    
+#    word_label = 
+#    
+download_data(in_dir,url_hockey)
+    
+    
+    
 def get_frames(current_dir, file_name):
     
     in_file = os.path.join(current_dir, file_name)
@@ -156,6 +181,7 @@ def get_transfer_values(current_dir, file_name):
             
     return transfer_values
 
+in_dir_prueba = 'data'
 
 def proces_transfer(vid_names, in_dir, labels):
     
@@ -300,6 +326,14 @@ def make_files_validation(n_files):
             numer += 1
   
 
+#valores = get_transfer_values(in_dir, file_name)
+
+#transfer_values = cache.cache(cache_path='datos_cache.pkl',
+#                        fn=get_transfer_values,
+#                        current_dir=in_dir,
+#                        file_name="no381_xvid.avi")
+
+
 def label_video_names(in_dir):
     
     names = []
@@ -434,12 +468,12 @@ result = model.evaluate(np.array(data_val), np.array(target_val))
 for name, value in zip(model.metrics_names, result):
     print(name, value)
 
+# filename = '/kaggle/working/finalized_model.sav'
+# pickle.dump(model, open(filename, 'wb'))
 
-    
-    
-    
-    
+model_json = model.to_json()
+with open("/kaggle/working/model.json", "w") as json_file:
+    json_file.write(model_json)
 
-
-
+model.save_weights("/kaggle/working/model.h5")
 
