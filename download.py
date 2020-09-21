@@ -15,7 +15,6 @@
 # Copyright 2016 by Magnus Erik Hvass Pedersen
 #
 ########################################################################
-
 import sys
 import os
 import urllib.request

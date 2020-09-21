@@ -32,6 +32,8 @@ python -m pip install -U matplotlib
 pip install Keras
 # install h5py
 pip install h5py
+#install json
+pip install json
 ```
 
 Let's train the violence classifier. Type on shell in project directory: 
