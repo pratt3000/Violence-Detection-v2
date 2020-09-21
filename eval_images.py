@@ -37,27 +37,11 @@ _images_per_file = 20
 _num_images_train = _num_files_train * _images_per_file
 video_exts = ".avi"
 
+
 class modelDone():
-        
 
-    def get_frames(self, file_name):
 
-        images = []
-        vidcap = cv2.VideoCapture(file_name)
-        success,image = vidcap.read()
-        count = 0
-        while count<_images_per_file:
-            RGB_img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            res = cv2.resize(RGB_img, dsize=(img_size, img_size),
-                                    interpolation=cv2.INTER_CUBIC)
-            images.append(res)
-            success,image = vidcap.read()
-            count += 1
-        resul = np.array(images)
-        resul = (resul / 255.).astype(np.float16)
-        return resul
-
-    def get_transfer_values(self, file_name):
+    def get_transfer_values(self, images):
 
         image_model = VGG16(include_top=True, weights='imagenet')
 
@@ -71,7 +55,7 @@ class modelDone():
 
         image_batch = np.zeros(shape=shape, dtype=np.float16)
 
-        image_batch = self.get_frames(file_name)
+        image_batch = images
 
         # Pre-allocate output-array for transfer-values.
         # Note that we use 16-bit floating-points to save memory.
@@ -83,9 +67,9 @@ class modelDone():
 
         return transfer_values
 
-    def evaluation(self, file_name):
+    def evaluation(self, images):
 
-        image_set = self.get_transfer_values(file_name)
+        image_set = self.get_transfer_values(images)
         image_set = np.reshape(image_set, [1,20,4096])
 
         loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
@@ -97,5 +81,6 @@ class modelDone():
             ans = 0
         
         return ans
+    
 
 
