@@ -54,9 +54,8 @@ while flag:
         img = np.array(img)
         img = (img / 255.).astype(np.float16)
 
-        for i in range(0, 19):
-            images[i]=images[i+1]
-        images[19]=img
+        images[i]=img
+        
 
     ans = ob.evaluation(images)
     print("ans = ",ans)
@@ -83,7 +82,7 @@ result = cv2.VideoWriter('tp1.avi',
 
 for i in range(len(answer)):
     if answer[i]==1:
-        for i in range(0,20):
+        for j in range(0,20):
             success,frame = vidcap.read()
             if success==False:
                 flag = False
@@ -92,7 +91,7 @@ for i in range(len(answer)):
             cv2.putText(frame,'VIOLENCE', (50, 50), font, 1, (0, 255, 255), 2, cv2.LINE_4)
             result.write(frame) 
     else:
-        for i in range(0,20):
+        for j in range(0,20):
             success,frame = vidcap.read()
             if success==False:
                 flag = False
