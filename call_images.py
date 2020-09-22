@@ -33,7 +33,7 @@ vidcap = cv2.VideoCapture(file_name)
 flag = True
 
 length = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
-print( length )
+print( "length = ",length )
 
 answer = []
 start = time.time()
