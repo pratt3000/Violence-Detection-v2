@@ -382,4 +382,4 @@ with open(os.path.join(out_dir,'model.json'), "w") as json_file:
     json_file.write(model_json)
 
 # SAVE MODEL WEIGHTS
-model.save_weights(os.path.join(out_dir,'model.h'))
+model.save_weights(os.path.join(out_dir,'model.h5'))
