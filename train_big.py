@@ -32,20 +32,9 @@ def print_progress(count, max_count):
 
 
 dir_fight="/kaggle/input/violence-final/fight"
-
-
-
 dir_not_fight="/kaggle/input/violence-final/not_fight"
-
-
-
 list_fight=os.listdir(dir_fight)
-
-
-
 list_no_fight=os.listdir(dir_not_fight)
-
-
 
 import random
 fight_final=random.sample(list_fight, 800)
@@ -144,33 +133,7 @@ def get_frames(current_dir, file_name):
     return resul
 
 
-
-names[12]
-
-
-
-frames = get_frames(dir_not_fight, names[12])
-
-
-
-visible_frame = (frames*255).astype('uint8')
-
-
-
-plt.imshow(visible_frame[3])
-
-
-
-plt.imshow(visible_frame[15])
-
-
-
 image_model = VGG16(include_top=True, weights='imagenet')
-
-
-
-image_model.summary()
-
 
 
 input_shape = image_model.layers[0].output_shape[1:3]
@@ -309,13 +272,10 @@ def make_files(n_files):
             numer += 1
 
 
-
 def make_files_test(n_files):
     
     gen = proces_transfer(names_test, labels_test)
-
     numer = 1
-
     # Read the first chunk to get the column dtypes
     chunk = next(gen)
 
@@ -375,12 +335,7 @@ labels_test = labels[training_set:]
 
 
 make_files(training_set)
-
-
-
-
 make_files_test(test_set)
-
 
 
 def process_alldata_training():
@@ -440,9 +395,6 @@ def process_alldata_test():
 
 
 data, target = process_alldata_training()
-
-
-
 data_test, target_test = process_alldata_test()
 
 
@@ -479,28 +431,6 @@ result = model.evaluate(np.array(data_test), np.array(target_test))
 
 for name, value in zip(model.metrics_names, result):
     print(name, value)
-
-
-
-plt.plot(history.history['accuracy'])
-plt.plot(history.history['val_accuracy'])
-plt.title('model accuracy')
-plt.ylabel('accuracy')
-plt.xlabel('epoch')
-plt.legend(['train', 'validation'], loc='upper left')
-plt.savefig('destination_path.eps', format='eps', dpi=1000)
-plt.show()
-# summarize history for loss
-plt.plot(history.history['loss'])
-plt.plot(history.history['val_loss'])
-plt.title('model loss')
-plt.ylabel('loss')
-plt.xlabel('epoch')
-plt.legend(['train', 'validation'], loc='upper left')
-plt.savefig('destination_path1.eps', format='eps', dpi=1000)
-plt.show()
-
-
 
 out_dir = '/kaggle/working/'
 
