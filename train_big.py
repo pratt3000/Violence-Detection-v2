@@ -1,10 +1,4 @@
-# To add a new cell, type ''
-# To add a new markdown cell, type ' [markdown]'
 
-from IPython import get_ipython
-
-
-get_ipython().run_line_magic('matplotlib', 'inline')
 import cv2
 import os
 import numpy as np
