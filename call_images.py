@@ -69,6 +69,45 @@ while flag:
     
 print(answer)
 
+
+font = cv2.FONT_HERSHEY_SIMPLEX 
+vidcap = cv2.VideoCapture(file_name)
+flag = True
+frame_width = int(vidcap.get(3)) 
+frame_height = int(vidcap.get(4)) 
+   
+size = (frame_width, frame_height)
+result = cv2.VideoWriter('tp1.avi',  
+                         cv2.VideoWriter_fourcc(*'MJPG'), 
+                         10, size) 
+
+for i in range(len(answer)):
+    if answer[i]==1:
+        for i in range(0,20):
+            success,frame = vidcap.read()
+            if success==False:
+                flag = False
+                break
+            
+            cv2.putText(frame,'VIOLENCE', (50, 50), font, 1, (0, 255, 255), 2, cv2.LINE_4)
+            result.write(frame) 
+    else:
+        for i in range(0,20):
+            success,frame = vidcap.read()
+            if success==False:
+                flag = False
+                break
+            
+            cv2.putText(frame,'NON VIOLENCE', (50, 50), font, 1, (0, 255, 255), 2, cv2.LINE_4)
+            result.write(frame) 
+
+    if flag == False:
+        break
+result.release()
+            
+
+
+
     
 
 

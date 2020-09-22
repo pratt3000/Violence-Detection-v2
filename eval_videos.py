@@ -39,7 +39,6 @@ video_exts = ".avi"
 
 class modelDone():
         
-
     def get_frames(self, file_name):
 
         images = []
