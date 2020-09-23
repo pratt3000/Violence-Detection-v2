@@ -29,33 +29,32 @@ import time
 ob = modelDone()
 file_name = "test/1.avi"
 img_size = 224
-vidcap = cv2.VideoCapture(file_name)
 flag = True
+answer = []
+start = time.time()
+
+vidcap = cv2.VideoCapture(file_name)
 
 length = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
 print( "length = ",length )
 
-answer = []
-start = time.time()
-
+images = np.zeros((20,224,224,3))
 while flag:
 
-    images = np.zeros((20,224,224,3))
     for i in range (0,20):
 
-        success,image = vidcap.read()
+        success, image = vidcap.read()
         if success==False:
             print("frames over = ",i)
             flag = False
             break
 
         RGB_img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        img = cv2.resize(RGB_img, dsize=(img_size, img_size),interpolation=cv2.INTER_CUBIC)
+        img = cv2.resize(RGB_img, dsize=(img_size, img_size), interpolation=cv2.INTER_CUBIC)
         img = np.array(img)
         img = (img / 255.).astype(np.float16)
 
         images[i]=img
-        
 
     ans = ob.evaluation(images)
     print("ans = ",ans)

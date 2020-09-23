@@ -36,11 +36,11 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 print(device)
 
 
-json_file = open('model_big.json', 'r')
+json_file = open('model.json', 'r')
 loaded_model_json = json_file.read()
 json_file.close()
 loaded_model = model_from_json(loaded_model_json)
-loaded_model.load_weights("weights_big.h5")
+loaded_model.load_weights("weights.h5")
 
 img_size = 224
 img_size_touple = (img_size, img_size)

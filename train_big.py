@@ -171,7 +171,7 @@ def get_transfer_values(current_dir, file_name):
     shape = (_images_per_file, transfer_values_size)
     transfer_values = np.zeros(shape=shape, dtype=np.float16)
 
-    transfer_values =             image_model_transfer.predict(image_batch)
+    transfer_values = image_model_transfer.predict(image_batch)
             
     return transfer_values
 
@@ -331,8 +331,6 @@ names_test = names[training_set:]
 
 labels_training = labels[0:training_set]
 labels_test = labels[training_set:]
-
-
 
 make_files(training_set)
 make_files_test(test_set)
