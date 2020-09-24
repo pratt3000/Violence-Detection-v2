@@ -39,6 +39,6 @@ pip install json
 Let's train the violence classifier. Type on shell in project directory: 
 
 ```bash
-python Violence_Detection.py
+python train.py/train_big.py
 ```
 
